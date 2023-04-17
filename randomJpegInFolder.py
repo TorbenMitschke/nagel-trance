@@ -27,7 +27,7 @@ def copy_random_jpeg():
     if os.path.exists(destination_path):
         shutil.copy(os.path.join(source_path, random_file),
                     os.path.join(destination_path, random_file))
-        print("random jpeg was selected and moved to the folder 'randomJpeg'")
+        print("random jpeg was selected and copied to the folder 'randomJpeg'")
 
 
 def main():
