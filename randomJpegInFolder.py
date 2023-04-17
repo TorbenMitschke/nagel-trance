@@ -9,8 +9,8 @@ import subprocess
 
 def copy_random_jpeg():
     # specify source and destination path
-    source_path = "~/jpeg"
-    destination_path = "~/randomJpeg"
+    source_path = "./jpeg"
+    destination_path = "./randomJpeg"
 
     # get a list of .jpeg files in the source folder
     jpeg_files = [f for f in os.listdir(source_path) if f.endswith(".jpeg")]
