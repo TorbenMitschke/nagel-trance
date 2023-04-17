@@ -33,9 +33,9 @@ def copy_random_jpeg():
 def main():
     isRunOnce = False
     while True:
-        if isRunOnce:
-            subprocess.run(["clear"])
-        print("\nEnter 'random' to copy a random JPEG or 'quit' to exit:  ", "\r")
+        # if isRunOnce:
+        # subprocess.run(["clear"])
+        print("\nEnter 'random' to copy a random JPEG or 'quit' to exit:  ")
         user_input = input()
         if user_input == "random":
             isRunOnce = True
