@@ -1,6 +1,5 @@
 # import necessary modules
 import os
-import shutil
 import random
 import subprocess
 
@@ -26,17 +25,13 @@ def print_random_file():
 def main():
     isRunOnce = False
     while True:
-        # if isRunOnce:
-        # subprocess.run(["clear"])
         print("\nEnter 'random' to print a random artwork or 'quit' to exit:  ")
         user_input = input()
         if user_input == "random":
-            isRunOnce = True
             print_random_file()
         elif user_input == "quit":
             break
         else:
-            isRunOnce = True
             print("\nInvalid input, please try again.")
 
 
