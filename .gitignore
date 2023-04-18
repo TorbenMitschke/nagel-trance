@@ -6,5 +6,6 @@ __pycache__/
 dist/
 *.log
 randomJpeg/
+pdf/
 jpeg/
 jpegTest/
