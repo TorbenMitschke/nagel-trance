@@ -1,8 +1,11 @@
 # import necessary modules
-import os
-import random
 import subprocess
-import keyboard
+import random
+import os
+from pynput import keyboard
+
+# Global variable to control the script termination
+terminate_script = False
 
 # define the function to randomly select a file and send it to the default printer job queue
 
@@ -23,27 +26,29 @@ def print_random_file():
     print("random file " + random_file + "was selected and sent to the printer")
 
 
+def on_press(key):
+    global terminate_script
+    try:
+        if key == keyboard.Key.space:
+            print("space bar is pressed")
+        elif keyboard.Key.esc:
+            terminate_script = True
+            return False
+    except AttributeError:
+        pass
+
+
 def main():
-    while True:
-        print("\nPress the left key to print a random artwork or the right button to exit the programm:  ")
-        """
-        user_input = input()
-        if user_input == "random":
-            print_random_file()
-        elif user_input == "quit":
-            break
-        else:
-            print("\nInvalid input, please try again.")
-        """
-        while True:
-            if keyboard.is_pressed("space"):
-                print("space is pressed")
-            if keyboard.is_pressed("r"):
-                print("r key is pressed")
-            elif keyboard.is_pressed("q"):
-                break
-            else:
-                print("\nInvalid input please try again.")
+    global terminate_script
+    print("Press the space key to print a random file or 'R' to exit")
+
+    listener = keyboard.Listener(on_press=on_press)
+    listener.start()
+
+    while not terminate_script:
+        listener.join(1)
+
+    listener.stop()
 
 
 if __name__ == '__main__':
