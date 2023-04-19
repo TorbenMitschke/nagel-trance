@@ -2,6 +2,7 @@
 import os
 import random
 import subprocess
+import keyboard
 
 # define the function to randomly select a file and send it to the default printer job queue
 
@@ -23,9 +24,9 @@ def print_random_file():
 
 
 def main():
-    isRunOnce = False
     while True:
-        print("\nEnter 'random' to print a random artwork or 'quit' to exit:  ")
+        print("\nPress the left key to print a random artwork or the right button to exit the programm:  ")
+        """
         user_input = input()
         if user_input == "random":
             print_random_file()
@@ -33,6 +34,16 @@ def main():
             break
         else:
             print("\nInvalid input, please try again.")
+        """
+        while True:
+            if keyboard.is_pressed("space"):
+                print("space is pressed")
+            if keyboard.is_pressed("r"):
+                print("r key is pressed")
+            elif keyboard.is_pressed("q"):
+                break
+            else:
+                print("\nInvalid input please try again.")
 
 
 if __name__ == '__main__':
