@@ -1,11 +1,14 @@
 # import necessary modules
 import subprocess
 import random
+import sys
+import termios
+import tty
 import os
 from pynput import keyboard
 
 # Global variable to control the script termination
-terminate_script = False
+stop_listener = False
 
 # define the function to randomly select a file and send it to the default printer job queue
 
@@ -25,30 +28,52 @@ def print_random_file():
     subprocess.run(["lp", os.path.join(source_path, random_file)])
     print("random file " + random_file + "was selected and sent to the printer")
 
+    # Display the instruction message again
+    MAGENTA = "\033[35m"
+    RESET = "\033[0m"
+    print(
+        f"\n{MAGENTA}Press the right key to print a random file or the left key to exit{RESET}")
+
 
 def on_press(key):
-    global terminate_script
+    global stop_listener
     try:
-        if key == keyboard.Key.space:
-            print("space bar is pressed")
-        elif keyboard.Key.esc:
-            terminate_script = True
+        if key.char.lower() == 'p':
+            print_random_file()
+        elif key.char.lower() == 'q':
+            stop_listener = True
             return False
     except AttributeError:
         pass
 
 
 def main():
-    global terminate_script
-    print("Press the space key to print a random file or 'R' to exit")
+    # ANSI escape code for purple text
+    MAGENTA = "\033[35m"
+    # ANSI escape code to reset the text formatting
+    RESET = "\033[0m"
 
-    listener = keyboard.Listener(on_press=on_press)
-    listener.start()
+    print(
+        f"\n{MAGENTA}Press the left key to print a random file or the right key to exit{RESET}")
 
-    while not terminate_script:
-        listener.join(1)
+    # Save the current terminal settings
+    old_settings = termios.tcgetattr(sys.stdin)
 
-    listener.stop()
+    try:
+        # Disable terminal echoing
+        tty.setcbreak(sys.stdin.fileno())
+
+        listener = keyboard.Listener(on_press=on_press)
+        listener.start()
+
+        while not stop_listener:
+            listener.join(1)
+
+        listener.stop()
+
+    finally:
+        # Restore the terminal settings
+        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_settings)
 
 
 if __name__ == '__main__':
