@@ -32,7 +32,7 @@ def print_random_file():
     MAGENTA = "\033[35m"
     RESET = "\033[0m"
     print(
-        f"\n{MAGENTA}Press the right key to print a random file or the left key to exit{RESET}")
+        f"\n{MAGENTA}Press the left key to print a random file or the right key to exit{RESET}")
 
 
 def on_press(key):
