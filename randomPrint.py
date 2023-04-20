@@ -40,7 +40,7 @@ def on_press(key):
     try:
         if key.char.lower() == 'y':
             print_random_file()
-        elif key.char.lower() == 'w':
+        elif key.char.lower() == 'q':
             stop_listener = True
             return False
     except AttributeError:
