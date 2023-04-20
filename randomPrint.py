@@ -38,9 +38,9 @@ def print_random_file():
 def on_press(key):
     global stop_listener
     try:
-        if key.char.lower() == 'p':
+        if key.char.lower() == 'y':
             print_random_file()
-        elif key.char.lower() == 'q':
+        elif key.char.lower() == 'w':
             stop_listener = True
             return False
     except AttributeError:
