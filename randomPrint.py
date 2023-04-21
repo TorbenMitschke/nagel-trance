@@ -5,10 +5,17 @@ import sys
 import termios
 import tty
 import os
+import time
 from pynput import keyboard
 
 # Global variable to control the script termination
 stop_listener = False
+
+# Add a global variable to store the last time the print function was called
+last_print_time = None
+
+# Define the minimum time between print function calls (in seconds)
+min_time_between_prints = 60  # 1 minute
 
 # define the function to randomly select a file and send it to the default printer job queue
 
@@ -29,17 +36,26 @@ def print_random_file():
     print("random file " + random_file + "was selected and sent to the printer")
 
     # Display the instruction message again
-    MAGENTA = "\033[35m"
+    RED = "\033[31m"
     RESET = "\033[0m"
     print(
-        f"\n{MAGENTA}Press the left key to print a random file or the right key to exit{RESET}")
+        f"\n{RED}Do not press the left key!{RESET}")
 
 
 def on_press(key):
-    global stop_listener
+    global stop_listener, last_print_time
     try:
         if key.char.lower() == 'y':
-            print_random_file()
+            current_time = time.time()
+
+            # Check if the print function can be called
+            if last_print_time is None or (current_time - last_print_time) >= min_time_between_prints:
+                print_random_file()
+                last_print_time = current_time
+            else:
+                print("Don't be wasteful and wait some time before printing again.")
+        elif key.char.lower() == 'w':
+            print("\nNageltrance ist Nageltrance.\n")
         elif key.char.lower() == 'q':
             stop_listener = True
             return False
@@ -49,12 +65,12 @@ def on_press(key):
 
 def main():
     # ANSI escape code for purple text
-    MAGENTA = "\033[35m"
+    RED = "\033[31m"
     # ANSI escape code to reset the text formatting
     RESET = "\033[0m"
 
     print(
-        f"\n{MAGENTA}Press the left key to print a random file or the right key to exit{RESET}")
+        f"\n{RED}Do not press the left key!{RESET}")
 
     # Save the current terminal settings
     old_settings = termios.tcgetattr(sys.stdin)
