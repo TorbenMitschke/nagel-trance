@@ -33,7 +33,8 @@ def print_random_file():
 
     # print the random file -> send file to default printer queue
     subprocess.run(["lp", os.path.join(source_path, random_file)])
-    print("random file " + random_file + "was selected and sent to the printer")
+    print("random artwork " + random_file +
+          " was selected and sent to the printer")
 
     # Display the instruction message again
     RED = "\033[31m"
