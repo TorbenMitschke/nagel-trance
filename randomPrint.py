@@ -54,7 +54,8 @@ def on_press(key):
                 print_random_file()
                 last_print_time = current_time
             else:
-                print("Don't be wasteful and wait some time before printing again.")
+                print(
+                    "Don't be wasteful and wait some time before printing again. Wait for the red prompt.")
         elif key.char.lower() == 'w':
             print("\nNageltrance ist Nageltrance.\n")
         elif key.char.lower() == 'q':
